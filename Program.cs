@@ -13,11 +13,12 @@ builder.Services.AddControllers()
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-string mySqlConnection = builder.Configuration.GetConnectionString("DefaultConnection");
-
+//string mySQLLiteConnection = builder.Configuration.GetConnectionString("DefaultConnection");
+string projectDirectory = Environment.CurrentDirectory;
+string mySQLLiteConnection = String.Concat( "DataSource=", projectDirectory, "\\Database\\Catalogo.db");
+    
 builder.Services.AddDbContext<AppDbContext>(options =>
-                    options.UseMySql(mySqlConnection,
-                    ServerVersion.AutoDetect(mySqlConnection)));
+                    options.UseSqlite(mySQLLiteConnection));
 
 var app = builder.Build();
 
